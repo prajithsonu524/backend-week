@@ -7,8 +7,8 @@ const {
 }=require('../controllers/toDoController');
 
 router.get('/get',getTasks);
-router.get('/post',postTask);
+router.post('/post',postTask);
 router.delete('/delete/:id',deleteTask);
-router.post('/update/:id',updateTaskStatus);
+router.put('/update/:id',updateTaskStatus);
 
 module.exports=router;
