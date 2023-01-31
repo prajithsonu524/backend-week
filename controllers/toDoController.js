@@ -1,5 +1,5 @@
 
-const Services = require('../Services/todoServices');
+const Services = require('../services/todo.service');
 
 const getTasks = async (req, res) => {
     const todoList = await Services.getAll();

@@ -6,9 +6,10 @@ const {
     updateTaskStatus
 } = require('../controllers/toDoController');
 
-router.get('/get', getTasks);
-router.post('/post', postTask);
-router.delete('/delete/:id', deleteTask);
-router.put('/update/:id', updateTaskStatus);
+router.get('/todo', getTasks);
+router.post('/todo', postTask);
+router.delete('/todo/:id', deleteTask);
+router.put('/todo/:id', updateTaskStatus);
+
 
 module.exports = router;

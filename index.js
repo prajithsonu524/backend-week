@@ -2,10 +2,10 @@ const express = require('express');
 const app = express();
 const port = 3000;
 
-const router=require('./routes/todoRoute');
+const router = require('./routes/todoRoute');
 app.use(express.json()); //very very important
 
-app.use('/todo', router);
+app.use(router);
 
 
 app.listen(port, () => {
