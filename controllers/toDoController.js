@@ -1,45 +1,45 @@
-const Tasks=require('../Services/todoServices');
 
+const Services = require('../Services/todoServices');
 
 const getTasks = async (req, res) => {
-    const todoList = await Tasks.findAll();
+    const todoList = await Services.getAll();
     console.log(todoList);
     res.json(todoList);
 };
 
-// const postTask = (req, res) => {
-//     // data.push({
-//     //     'id': id++,
-//     //     'name': req.body.name,
-//     //     'isCompleted': false
-//     // });
-//     data.push({
-//         ...req.body.name, //*********** */
-//         id: id++,
-//         isCompleted: false
-//     });
-//     res.json(data);
-// };
+const postTask = (req, res) => {
+    const name = req.body.name;
+    const ToDoTasks = Services.postTask(name);
+    if (!ToDoTasks) return res.status(404).json({ message: 'Task not found' });
+    return res.status(200).json({ message: 'Task added successfully' });
+};
 
 
 
 const deleteTask = async (req, res) => {
 
-    const task_id=req.params.id;
-    console.log(task_id);
-     const ToDoTasks= await Tasks.destroy({
-        where: {
-            id:task_id
-        }});
-    res.json(ToDoTasks);
+    const task_id = req.params.id;
 
+    const ToDoTasks = await Services.deleteTask(task_id);
+
+    if (!ToDoTasks) return res.status(404).json({ message: 'Task not found' });
+    return res.status(200).json({ message: 'Task deleted successfully' });
+
+};
+
+const updateTaskStatus = async (req, res) => {
+    const task_id = req.params.id;
+    const isComplete = req.body.isComplete;
+    const ToDoTasks = await Services.updateTaskStatus(isComplete, task_id);
+    if (!ToDoTasks) return res.status(404).json({ message: 'Task not found' });
+    return res.status(200).json({ message: 'Task updated successfully' });
 };
 
 module.exports = {
     getTasks,
-    // postTask,
+    postTask,
     deleteTask,
-    // updateTaskStatus
+    updateTaskStatus
 };
 
 

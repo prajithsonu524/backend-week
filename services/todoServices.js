@@ -1,20 +1,43 @@
-//instantiating tasks
-const {DataTypes}=require('sequelize');
 const tasksInstanceFunction = require('../database/models/tasks');
-const db=require('../database/models/index');
+const db = require('../database/models/index');
 
-const Tasks=tasksInstanceFunction(db.sequelize,DataTypes);
-module.exports=Tasks;
+const Tasks = tasksInstanceFunction(db.sequelize, db.Sequelize.DataTypes);
 
-// (async () => {
-//     const ToDo = await Tasks.build({
-//         name: 'buy medicines',
-//         isComplete: false
-    
-//     });
-//     await ToDo.save();
-//     console.log('TODO saved to database');
-   
-//     console.log('id given by db',ToDo.id);
-//     // Code here`
-//   })();
+
+const getAll = async () => {
+    const todoList = await Tasks.findAll();
+    return todoList;
+};
+const deleteTask = async (id) => {
+
+    const ToDoTasks = await Tasks.destroy({
+        where: {
+            id: id
+        }
+    });
+    if (!ToDoTasks) return false;
+    return true;
+};
+const updateTaskStatus = async (isComplete, id) => {
+    const ToDoTasks = await Tasks.update({
+        isComplete: isComplete
+    },
+        {
+            where: {
+                id: id
+            }
+
+
+        });
+    if (!ToDoTasks) return false;
+    return true;
+};
+const postTask = async (name) => {
+    const ToDoTasks = await Tasks.create({
+        name: name,
+        isComplete: false
+    });
+    if (!ToDoTasks) return false;
+    return true;
+};
+module.exports = { getAll, deleteTask, updateTaskStatus, postTask };
