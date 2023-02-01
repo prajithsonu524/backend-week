@@ -1,3 +1,4 @@
+const requestBodyValidator = require('../middlewares/todo.validator');
 const router = require('express').Router();
 const {
     getTasks,
@@ -6,10 +7,12 @@ const {
     updateTaskStatus
 } = require('../controllers/toDoController');
 
-router.get('/todo', getTasks);
-router.post('/todo', postTask);
-router.delete('/todo/:id', deleteTask);
-router.put('/todo/:id', updateTaskStatus);
+router.get('/todo', getTasks)
+    .post('/todo', requestBodyValidator, postTask);
+
+
+router.delete('/todo/:id', deleteTask)
+    .put('/todo/:id', updateTaskStatus);
 
 
 module.exports = router;
