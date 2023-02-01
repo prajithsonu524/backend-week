@@ -3,8 +3,13 @@ const { Tasks } = require('../database/models');
 // const Tasks = tasksInstanceFunction(db.sequelize, db.Sequelize.DataTypes);
 
 const getAll = async () => {
-  const todoList = await Tasks.findAll();
-  return todoList;
+  try {
+    const todoList = await Tasks.findAll();
+    return todoList;
+  }
+  catch (err) {
+    console.log(err);
+  }
 };
 
 const deleteTask = async (id) => {
